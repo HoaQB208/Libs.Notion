@@ -2,7 +2,7 @@
 
 namespace Libs.Notion
 {
-    public class Client
+    public class NoClient
     {
         /// <summary>
         /// Get Notion Client

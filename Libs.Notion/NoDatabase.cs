@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Libs.Notion
 {
-    public class Database
+    public class NoDatabase
     {
         /// <summary>
         /// Database functs
@@ -22,9 +22,7 @@ namespace Libs.Notion
             {
                 var queryParams = new DatabasesQueryParameters();
                 var queryResponse = await client.Databases.QueryAsync(databaseId, queryParams);
-
                 rows.AddRange(queryResponse.Results);
-
                 while (queryResponse.HasMore)
                 {
                     queryParams.StartCursor = queryResponse.NextCursor;
@@ -40,7 +38,6 @@ namespace Libs.Notion
             {
                 Console.WriteLine($"General Error: {ex.Message}");
             }
-
             return rows;
         }
 

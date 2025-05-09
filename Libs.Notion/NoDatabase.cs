@@ -1,6 +1,7 @@
 ﻿using Notion.Client;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace Libs.Notion
@@ -14,22 +15,21 @@ namespace Libs.Notion
         /// <param name="databaseId">Chuỗi 32 ký tự sau tên miền và trước tham số '?v='
         /// và cần chia sẻ database với Client API đã tạo: Dấu 3 chấm (trên, phải) >> Connections >> Chọn Client API đã tạo</param>
         /// <returns></returns>
-        public static async Task<List<Page>> Get(NotionClient client, string databaseId, string sortBy = null, Direction direction = Direction.Ascending)
+        public static async Task<List<Page>> Get(NotionClient client, string databaseId, Dictionary<string, Direction> sortBys)
         {
             var rows = new List<Page>();
 
             try
             {
                 List<Sort> sorts = new List<Sort>();
-                if(!string.IsNullOrEmpty(sortBy))
+                foreach (var s in sortBys)
                 {
                     sorts.Add(new Sort()
                     {
-                        Property = sortBy,
-                        Direction = direction
+                        Property = s.Key,
+                        Direction = s.Value
                     });
                 }
-
                 var queryParams = new DatabasesQueryParameters()
                 {
                      Sorts = sorts
